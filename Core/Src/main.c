@@ -64,7 +64,8 @@ static void MX_TIM8_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+uint32_t LastBlinkTime = 0; // Stores the last time the LED blinked
+uint32_t BlinkInterval = 500; // Blink interval in milliseconds
 /* USER CODE END 0 */
 
 /**
@@ -107,6 +108,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  BlinkLed();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -506,7 +508,17 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void BlinkLed(void)
+{
+	uint32_t CurrentTime = HAL_GetTick(); // Get the current system time in ms
 
+	// Check if the blink interval has passed
+	if ((CurrentTime - LastBlinkTime) >= BlinkInterval)
+	{
+		HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+		LastBlinkTime = CurrentTime; // Update the last blink time
+	}
+}
 /* USER CODE END 4 */
 
 /**
