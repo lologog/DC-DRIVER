@@ -1,0 +1,56 @@
+.cproject
+.mxproject
+.project
+*.prefs
+
+ioc
+*.xml
+
+Debug/
+
+# Ignoruj pliki binarne generowane podczas kompilacji
+*.o
+*.d
+*.elf
+*.bin
+*.hex
+*.map
+*.ld
+*.axf
+*.srec
+
+# Ignoruj katalogi generowane przez STM32CubeIDE
+Debug/
+Release/
+
+# Ignoruj pliki tymczasowe edytorów tekstowych
+*.swp
+*.swo
+*.bak
+*~
+
+# Ignoruj katalogi konfiguracyjne IDE
+.vscode/
+.cproject
+.project
+.settings/
+
+# Ignoruj pliki CMSIS (można odtworzyć)
+Drivers/CMSIS/Include/cmsis_*.h
+Drivers/CMSIS/Include/core_*.h
+Drivers/CMSIS/Include/mpu_*.h
+Drivers/CMSIS/Include/system_*.h
+
+# Ignoruj HAL (można odtworzyć)
+Drivers/STM32L4xx_HAL_Driver/Inc/
+Drivers/STM32L4xx_HAL_Driver/Src/
+
+# Ignoruj pliki logów
+*.log
+
+# Ignoruj pliki generowane przez kompilator
+*.lst
+*.bak
+*.obj
+*.lst
+*.gch
