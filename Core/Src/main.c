@@ -109,6 +109,12 @@ int main(void)
   while (1)
   {
 	  BlinkLed();
+	  PowerSwitchOffDiagnostic(1, 1);
+	  PowerSwitchOffDiagnostic(2, 1);
+	  PowerSwitchOffDiagnostic(3, 1);
+	  PowerSwitchOffDiagnostic(4, 1);
+	  PowerSwitchOffDiagnostic(5, 1);
+	  PowerSwitchOffDiagnostic(6, 1);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -443,12 +449,17 @@ static void MX_GPIO_Init(void)
                           |SW5_IN_Pin|SW6_T_Pin|SW6_DEN_Pin|SW6_IN_Pin
                           |LED_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : SW1_T_Pin SW1_DEN_Pin SW1_IN_Pin SW2_IN_Pin
-                           SW3_T_Pin SW3_DEN_Pin SW3_IN_Pin DIR_R_Pin
-                           DIR_L_Pin */
-  GPIO_InitStruct.Pin = SW1_T_Pin|SW1_DEN_Pin|SW1_IN_Pin|SW2_IN_Pin
-                          |SW3_T_Pin|SW3_DEN_Pin|SW3_IN_Pin|DIR_R_Pin
-                          |DIR_L_Pin;
+  /*Configure GPIO pin : SW1_T_Pin */
+  GPIO_InitStruct.Pin = SW1_T_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(SW1_T_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : SW1_DEN_Pin SW1_IN_Pin SW2_IN_Pin SW3_T_Pin
+                           SW3_DEN_Pin SW3_IN_Pin DIR_R_Pin DIR_L_Pin */
+  GPIO_InitStruct.Pin = SW1_DEN_Pin|SW1_IN_Pin|SW2_IN_Pin|SW3_T_Pin
+                          |SW3_DEN_Pin|SW3_IN_Pin|DIR_R_Pin|DIR_L_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -524,32 +535,33 @@ void BlinkLed(void)
 // Toggling state of IN pin of power switches in off diagnostic mode
 void PowerSwitchOffDiagnostic(uint8_t DeviceNumber, bool state)
 {
-	GPIO_PinState PinState = state ? GPIO_PIN_SET : GPIO_PIN_RESET;
+    GPIO_PinState PinState = state ? GPIO_PIN_SET : GPIO_PIN_RESET;
 
-	switch(DeviceNumber)
-	{
-		case 1:
-			HAL_GPIO_WritePin(SW1_IN_GPIO_Port, SW1_IN_Pin, PinState);
-			break;
-		case 2:
-			HAL_GPIO_WritePin(SW2_IN_GPIO_Port, SW2_IN_Pin, PinState);
-			break;
-		case 3:
-			HAL_GPIO_WritePin(SW3_IN_GPIO_Port, SW3_IN_Pin, PinState);
-			break;
-		case 4:
-			HAL_GPIO_WritePin(SW4_IN_GPIO_Port, SW4_IN_Pin, PinState);
-			break;
-		case 5:
-			HAL_GPIO_WritePin(SW5_IN_GPIO_Port, SW5_IN_Pin, PinState);
-			break;
-		case 6:
-			HAL_GPIO_WritePin(SW6_IN_GPIO_Port, SW6_IN_Pin, PinState);
-			break;
-		default:
-			break;
-	}
+    switch(DeviceNumber)
+    {
+        case 1:
+            HAL_GPIO_WritePin(SW1_IN_GPIO_Port, SW1_IN_Pin, PinState);
+            break;
+        case 2:
+            HAL_GPIO_WritePin(SW2_IN_GPIO_Port, SW2_IN_Pin, PinState);
+            break;
+        case 3:
+            HAL_GPIO_WritePin(SW3_IN_GPIO_Port, SW3_IN_Pin, PinState);
+            break;
+        case 4:
+            HAL_GPIO_WritePin(SW4_IN_GPIO_Port, SW4_IN_Pin, PinState);
+            break;
+        case 5:
+            HAL_GPIO_WritePin(SW5_IN_GPIO_Port, SW5_IN_Pin, PinState);
+            break;
+        case 6:
+            HAL_GPIO_WritePin(SW6_IN_GPIO_Port, SW6_IN_Pin, PinState);
+            break;
+        default:
+            break;
+    }
 }
+
 /* USER CODE END 4 */
 
 /**
