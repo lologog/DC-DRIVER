@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -109,7 +109,6 @@ int main(void)
   while (1)
   {
 	  BlinkLed();
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -509,6 +508,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+// Blinking LED on PB6 pin
 void BlinkLed(void)
 {
 	uint32_t CurrentTime = HAL_GetTick(); // Get the current system time in ms
@@ -518,6 +518,36 @@ void BlinkLed(void)
 	{
 		HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
 		LastBlinkTime = CurrentTime; // Update the last blink time
+	}
+}
+
+// Toggling state of IN pin of power switches in off diagnostic mode
+void PowerSwitchOffDiagnostic(uint8_t DeviceNumber, bool state)
+{
+	GPIO_PinState PinState = state ? GPIO_PIN_SET : GPIO_PIN_RESET;
+
+	switch(DeviceNumber)
+	{
+		case 1:
+			HAL_GPIO_WritePin(SW1_IN_GPIO_Port, SW1_IN_Pin, PinState);
+			break;
+		case 2:
+			HAL_GPIO_WritePin(SW2_IN_GPIO_Port, SW2_IN_Pin, PinState);
+			break;
+		case 3:
+			HAL_GPIO_WritePin(SW3_IN_GPIO_Port, SW3_IN_Pin, PinState);
+			break;
+		case 4:
+			HAL_GPIO_WritePin(SW4_IN_GPIO_Port, SW4_IN_Pin, PinState);
+			break;
+		case 5:
+			HAL_GPIO_WritePin(SW5_IN_GPIO_Port, SW5_IN_Pin, PinState);
+			break;
+		case 6:
+			HAL_GPIO_WritePin(SW6_IN_GPIO_Port, SW6_IN_Pin, PinState);
+			break;
+		default:
+			break;
 	}
 }
 /* USER CODE END 4 */
